@@ -29,7 +29,6 @@ router.get('/', async (req, res)=>{
         let rs = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`);
         videoGames = [...rs.data.results, ...videoGames];
       }
-      // console.log(videoGames.length);
       res.status(200).json(videoGames)
     } catch (error) {
       res.status(400).json({error})

@@ -25,15 +25,4 @@ router.get('/', async (req, res)=>{
   }
 });
 
-
-// router.get('/getAllPlataforms', async (req, res)=>{
-//   let rs = await axios.get(`https://api.rawg.io/api/platforms?key=${API_KEY}`);
-//   const {results} = rs.data;
-//   let str = '';
-//   results.forEach(element => {
-//     str += `INSERT INTO plataforms (name, slug, image_background) VALUES ('${element.name}', '${element.slug}', '${element.image_background}');\n`;
-//   });
-//   console.log(str);
-// })
-
 module.exports = router;

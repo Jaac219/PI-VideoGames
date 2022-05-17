@@ -34,14 +34,15 @@ router.get('/:idVideogame', async (req, res)=>{
 
 router.post('/', async (req, res)=>{
   try {
-    const {name, description, released, rating, generes, plataforms} = req.body;
-    // console.log(name, description, released, rating, generes, plataforms);
+    const {name, description, released, rating, genres, plataforms} = req.body;
     let gameCreate = await Videogame.create({name, description, released, rating});
-    generes.forEach(element => {gameCreate.setGenres(element)});
-    plataforms.forEach(element => {gameCreate.setPlataforms(element)});
+
+    if(genres[0]) genres.forEach(element => {gameCreate.setGenres(element)});
+    if(plataforms[0]) plataforms.forEach(element => {gameCreate.setPlataforms(element)});
+    
     res.status(201).send('Juego creado correctamente');
   } catch (error) {
-    res.status(400).json({error})
+    res.status(400).json({error});
   }
 })
 
