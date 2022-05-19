@@ -9,24 +9,29 @@ const router = Router();
 
 router.get('/:idVideogame', async (req, res)=>{
     let { idVideogame } = req.params;
+    const regexUUIDv4 = /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/;
+    
     try {
       let vd;
-      if(Number.isInteger(idVideogame)){
-        vd = await axios.get(`https://api.rawg.io/api/games/${idVideogame}?key=${API_KEY}`);
-      }else{
+      if(idVideogame.match(regexUUIDv4)){
         vd = await Videogame.findOne({
-            where: {id: idVideogame},
-            include: [
-                {model: Genre},
-                {model: Plataform}
-            ]
+          where: {id: idVideogame},
+          include: [
+            {model: Genre},
+            {model: Plataform}
+          ]
         });
-        vd = vd.dataValues;
+        if(vd) vd = vd.dataValues;
+      }else if (Number.isInteger(Number.parseInt(idVideogame))) {
+        vd = await axios.get(`https://api.rawg.io/api/games/${idVideogame}?key=${API_KEY}`)
+          .catch(err=>{return {error: err}});
+          if(vd.data) vd = vd.data;
+          if(vd.error) vd = null;
       }
 
       if (vd) res.status(200).json(vd)
       else res.status(204).json({data: 'No se obtubieron resultados'});
-    } catch (error) {
+    }catch (error) {
       res.status(400).json({error})
     }
 });
