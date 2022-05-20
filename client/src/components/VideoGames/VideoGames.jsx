@@ -7,6 +7,8 @@ function VideoGames(){
   const gamesInitState = useSelector((state) => state.allVideogames);
   const gamesState = useSelector((state) => state.viewVideoGames);
   const pageState = useSelector((state) => state.page);
+  const responseServer = useSelector((state) => state.responseServer);
+
   const fl = useSelector((state) => state.flag);
 
   const dispatch = useDispatch();
@@ -77,7 +79,6 @@ function VideoGames(){
       <div> 
         <label htmlFor="">Order by: </label>
         <select onChange={()=>{handlerChangeOrder()}} id="selOrderBy">
-          {/* <option value="">Select</option> */}
           <option value="name">Nombre</option>
           <option value="rating">Rating</option>
         </select>
@@ -98,7 +99,7 @@ function VideoGames(){
             </div>
           )
         }
-      }): <h1>Loading...</h1>}
+      }): responseServer.data ? [<h1 key={0}>{responseServer.data}</h1>]: <h1>Loading...</h1>}
     </div>
     {/* Creación de los botones por pagina segun la cantidad de juegos que exista */}
     <div><button onClick={()=>handlerClick(-1)}>{'<'}</button>

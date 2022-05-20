@@ -13,7 +13,12 @@ router.get('/', async (req, res)=>{
   if (req.query.name) {
     try {
       let rs = await axios.get(`https://api.rawg.io/api/games?search=${req.query.name}&key=${API_KEY}`);
-      let videoGames = await Videogame.findAll({ include: [{model: Genre},{model: Plataform}] });
+      let videoGames = await Videogame.findAll({ 
+        where: {name: req.query.name}, 
+        include: [{model: Genre},{model: Plataform}] 
+      });
+      videoGames = videoGames.map(val=>val.dataValues);
+
       let mix = [...rs.data.results, ...videoGames];
       if (mix[0]) res.status(200).json(mix.slice(0, 15))
       else  res.status(204).json({data: 'No se obtubieron resultados'});

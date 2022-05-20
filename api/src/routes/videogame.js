@@ -39,8 +39,8 @@ router.get('/:idVideogame', async (req, res)=>{
 
 router.post('/', async (req, res)=>{
   try {
-    const {name, description, released, rating, genres, plataforms} = req.body;
-    let gameCreate = await Videogame.create({name, description, released, rating});
+    const {name, description, released, rating, image_url, genres, plataforms} = req.body;
+    let gameCreate = await Videogame.create({name, description, released, rating, image_url});
 
     if(genres[0]) genres.forEach(element => {gameCreate.setGenres(element)});
     if(plataforms[0]) plataforms.forEach(element => {gameCreate.setPlataforms(element)});

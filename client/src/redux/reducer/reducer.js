@@ -1,14 +1,16 @@
-import { GET_VIDEOGAMES, PAGINATE, VIEW_GAMES, 
-  GET_GENRES, SEARCH_NAME, FLAG, GET_GAME_DETAIL
+import { GET_VIDEOGAMES, PAGINATE, VIEW_GAMES, GET_PLATAFORMS,
+  GET_GENRES, SEARCH_NAME, FLAG, GET_GAME_DETAIL, RESPONSE_SERVER
 } from '../actions/actionsTypes.js';
 
 const initialState = {
   allVideogames: [],
   viewVideoGames: [],
   genres: [],
+  plataforms: [],
   videogame: {},
   page: {},
-  flag: ''
+  flag: '',
+  responseServer: {}
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -36,6 +38,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         genres: action.payload
       }
+    case GET_PLATAFORMS:
+      return {
+        ...state,
+        plataforms: action.payload
+    }
     case SEARCH_NAME:
       return {
         ...state,
@@ -48,6 +55,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         videogame: action.payload
+      }
+    case RESPONSE_SERVER:
+      return {
+        ...state,
+        responseServer: action.payload
       }
     default:
       return state;

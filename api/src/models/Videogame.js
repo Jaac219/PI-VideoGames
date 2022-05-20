@@ -11,17 +11,20 @@ module.exports = (sequelize) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: false
     },
     released: {
       type: DataTypes.DATEONLY
     },
     rating: {
       type: DataTypes.DECIMAL
+    },
+    image_url: {
+      type: DataTypes.TEXT
     }
   });
 };
