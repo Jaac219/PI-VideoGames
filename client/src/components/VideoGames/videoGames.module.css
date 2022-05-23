@@ -1,0 +1,51 @@
+footer {
+    display: flex;
+    bottom: 0;
+    justify-content: space-around;
+    background-color: #252525;
+    position: absolute;
+    width: 100%;
+}
+.btnPageNum, .btnPage{
+    display: inline-block;
+}
+.btnPage, .btnPageNum > button {
+    background: none;
+    border: none;
+    color: white;
+}
+.btnPage:hover, .btnPageNum > button:hover {
+    border: 1px solid white;
+    border-radius: 10px;
+}
+.section{
+  background-color: #151515;
+  padding-left: 1em;
+  padding-right: 0;
+}
+.order{
+    text-align: right;
+    padding-left: 1em;
+    padding-right: 2em;
+}
+.order > label{
+  color: white;
+}
+.container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1350px){
+  .container{
+    justify-content: space-around;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 800px){
+  .container{
+    justify-content: flex-start;
+  }
+}

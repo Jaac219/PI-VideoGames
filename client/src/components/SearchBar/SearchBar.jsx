@@ -1,3 +1,4 @@
+import style from './searchBar.module.css'
 import { useState } from 'react';
 import {useDispatch} from "react-redux";
 import { searchForName, resetGames, getVideoGames } from '../../redux/actions/actions.js'
@@ -28,11 +29,15 @@ export default function SearchBar(){
   function handlerSubmit(e){e.preventDefault()}
 
   return (
-    <form onSubmit={(e)=>{handlerSubmit(e)}}>
-      <label htmlFor="">Name: </label>
-      <input onChange={(e)=> handleInputChange(e)} type="text" value={state.search}/>
-      <button onClick={(e)=>{handleClick(e)}} value={0}> + </button>
-      <button onClick={(e)=>{handleClick(e)}} value={1}> x </button>
+    <form className={style.formSearch} onSubmit={(e)=>{handlerSubmit(e)}}>
+      <>
+      <i className="fa fa-search"></i>
+      <input placeholder='Search for name' onChange={(e)=> handleInputChange(e)} type="text" value={state.search}/>
+      <div className={style.groupButton}>
+        <button className={style.btnSearch} onClick={(e)=>{handleClick(e)}} value={0}><i className="fa fa-search"></i></button>
+        <button className={style.btnSearch} onClick={(e)=>{handleClick(e)}} value={1}><i className="fa fa-retweet"></i></button>
+      </div>
+      </>
     </form>
   );
 }

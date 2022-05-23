@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
     rating: {
       type: DataTypes.DECIMAL
     },
-    image_url: {
+    background_image: {
       type: DataTypes.TEXT
     }
   });

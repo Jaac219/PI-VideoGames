@@ -1,3 +1,4 @@
+import style from './filters.module.css'
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGenres, setViewGames, flag } from '../../redux/actions/actions.js';
@@ -43,7 +44,7 @@ export default function Filters(){
   }//---------------------------------------------------------------------
 
   return (
-    <>
+    <div className={style.selectFilter}>
       <select onChange={()=>{handlerChangeFilter()}} id="selFilterType">
         <option value="all">All</option>
         <option value="database">DataBase</option>
@@ -57,6 +58,6 @@ export default function Filters(){
           )
         })}
       </select>
-    </>
+    </div>
   );
 }

@@ -1,0 +1,68 @@
+.formSearch {
+  display: flex;
+  flex-wrap: wrap;
+  width: 60%;
+  position: relative;
+}
+
+@media (max-width: 800px){
+  .formSearch {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
+.formSearch > i{
+  color: #898989;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  left: 12px;
+  top: 60%;
+  transform: translateY(-50%);
+}
+@media (max-width: 500px){
+  .formSearch > i{
+    display: none;
+  }
+}
+
+.formSearch > input {
+  display: inline-block;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.16);
+  width: 70%;
+  height: 44px;
+  border-radius: 30px;
+  padding: 0 12px 0 38px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.formSearch > input:hover{
+  background-color: white;
+  border: none;
+  color: black;
+}
+
+.formSearch > input:focus-visible{
+  background-color: white;
+  outline-offset: -25px;
+  color: black;
+}
+
+.btnSearch{
+  border: none;
+  background: none;
+  color: white;
+  font-size: 25px;
+}
+
+.btnSearch:hover{
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.groupButton{
+  display: inline-block;
+  padding-top: 8px;
+}

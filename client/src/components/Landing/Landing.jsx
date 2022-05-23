@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
+import style from './landing.module.css'
 
 export default function Landing(){
   return (
-    <>
-        <h1>Landing Page</h1>
-        <Link to='/videogames'>Videogames</Link>
-    </>
+    <div style={{backgroundImage: `url(./images/landing.png)`}} className={style.container}>
+        <Link to='/videogames'><img src="./images/play.png" alt="" /></Link>
+    </div>
   );
 }
 

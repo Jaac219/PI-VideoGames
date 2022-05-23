@@ -1,8 +1,7 @@
 require('dotenv').config();
-
 const axios = require('axios');
 const { Router } = require('express');
-const { Videogame, Genre, Plataform } = require('../db.js');
+const { Videogame, Genre, Platform } = require('../db.js');
 
 const { API_KEY } = process.env;
 const router = Router();
@@ -15,7 +14,7 @@ router.get('/', async (req, res)=>{
       let rs = await axios.get(`https://api.rawg.io/api/games?search=${req.query.name}&key=${API_KEY}`);
       let videoGames = await Videogame.findAll({ 
         where: {name: req.query.name}, 
-        include: [{model: Genre},{model: Plataform}] 
+        include: [{model: Genre},{model: Platform}] 
       });
       videoGames = videoGames.map(val=>val.dataValues);
 
@@ -27,7 +26,7 @@ router.get('/', async (req, res)=>{
     }
   }else{
     try {
-      let videoGames = await Videogame.findAll({ include: [{model: Genre},{model: Plataform}] });
+      let videoGames = await Videogame.findAll({ include: [{model: Genre},{model: Platform}] });
       videoGames = videoGames.map(val=>val.dataValues);
     
       for (let i = 1; i <= 5; i++) {

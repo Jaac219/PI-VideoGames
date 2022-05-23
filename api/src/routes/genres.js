@@ -18,7 +18,7 @@ router.get('/', async (req, res)=>{
       results = results.map(val=>{return {name: val.name, image_background: val.image_background}})
       await Genre.bulkCreate(results);
       rs = await Genre.findAll();
-      res.status(200).send(rs);
+      res.status(200).json(rs);
     }
   } catch (error) {
     res.status(400).json({error});

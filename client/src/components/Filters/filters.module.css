@@ -1,0 +1,17 @@
+.selectFilter{
+    display: inline-block;
+    padding-top: 5px;
+}
+.selectFilter > select {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 20px;
+    border-bottom: 1px solid;
+    margin-right: 15px;
+    width: 40%;
+}
+
+.selectFilter > select > option{
+    background-color: #151515;
+}

@@ -1,5 +1,5 @@
 import { 
-  GET_VIDEOGAMES, PAGINATE, VIEW_GAMES, GET_PLATAFORMS,
+  GET_VIDEOGAMES, PAGINATE, VIEW_GAMES, GET_PLATFORMS,
   GET_GENRES, SEARCH_NAME, FLAG, GET_GAME_DETAIL, RESPONSE_SERVER
 } from './actionsTypes.js';
 
@@ -11,7 +11,7 @@ export const getVideoGames = () => {
       dispatch({type: RESPONSE_SERVER, payload: {} }),
       axios.get(`http://localhost:3001/videogames`)
         .then((allGames)=>{
-        dispatch({type: GET_VIDEOGAMES, payload: allGames.data })
+          dispatch({type: GET_VIDEOGAMES, payload: allGames.data })
         })
     )
   }
@@ -26,15 +26,17 @@ export const getGenres = () => {
     return axios.get(`http://localhost:3001/genres`)
     .then((genres)=>{
       dispatch({type: GET_GENRES, payload: genres.data })
+    }).catch((err)=>{
+
     })
   }
 }
 
-export const getPlataforms = () => {
+export const getPlatforms = () => {
   return async function (dispatch){
-    return axios.get(`http://localhost:3001/plataforms`)
-    .then((plataforms)=>{
-      dispatch({type: GET_PLATAFORMS, payload: plataforms.data })
+    return axios.get(`http://localhost:3001/platforms`)
+    .then((platform)=>{
+      dispatch({type: GET_PLATFORMS, payload: platform.data })
     })
   }
 }
@@ -84,6 +86,7 @@ export const getGameDetail = (id) =>{
 }
 
 export const setNewGame = (data) =>{
+  //convierte los datos vacios en null 
   Object.keys(data).map(val=>{if(data[val] == '') data[val] = null})
   return async function (dispatch){
     return (

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 const { Router } = require('express');
-const { Videogame, Genre, Plataform } = require('../db.js');
+const { Videogame, Genre, Platform } = require('../db.js');
 
 const { API_KEY } = process.env;
 const router = Router();
@@ -18,7 +18,7 @@ router.get('/:idVideogame', async (req, res)=>{
           where: {id: idVideogame},
           include: [
             {model: Genre},
-            {model: Plataform}
+            {model: Platform}
           ]
         });
         if(vd) vd = vd.dataValues;
@@ -39,11 +39,11 @@ router.get('/:idVideogame', async (req, res)=>{
 
 router.post('/', async (req, res)=>{
   try {
-    const {name, description, released, rating, image_url, genres, plataforms} = req.body;
-    let gameCreate = await Videogame.create({name, description, released, rating, image_url});
+    const {name, description, released, rating, background_image, genres, platforms} = req.body;
+    let gameCreate = await Videogame.create({name, description, released, rating, background_image});
 
     if(genres[0]) genres.forEach(element => {gameCreate.setGenres(element)});
-    if(plataforms[0]) plataforms.forEach(element => {gameCreate.setPlataforms(element)});
+    if(platforms[0]) platforms.forEach(element => {gameCreate.setPlatforms(element)});
     
     res.status(201).send('Juego creado correctamente');
   } catch (error) {

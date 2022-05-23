@@ -1,7 +1,14 @@
 import { useEffect } from 'react';
+import { Route } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
+
 import VideoGame from '../VideoGame/VideoGame.jsx';
+import Filters from '../Filters/Filters.jsx';
+import SearchBar from '../SearchBar/SearchBar.jsx';
+
+import style from './videoGames.module.css';
 import { getVideoGames, paginate, setViewGames, resetGames, flag } from '../../redux/actions/actions.js';
+
 
 function VideoGames(){
   const gamesInitState = useSelector((state) => state.allVideogames);
@@ -75,8 +82,13 @@ function VideoGames(){
   
   return (
     <>
-    <div className="container">
-      <div> 
+    <header>
+      <Route exact path='/videogames' component={SearchBar}/>
+      <Route exact path='/videogames' component={Filters}/>
+    </header>
+    
+    <section className={style.section}>
+      <div className={style.order}> 
         <label htmlFor="">Order by: </label>
         <select onChange={()=>{handlerChangeOrder()}} id="selOrderBy">
           <option value="name">Nombre</option>
@@ -87,30 +99,39 @@ function VideoGames(){
           <option value="DESC">DESC</option>
         </select>
       </div>
-      {gamesInitState[0] ? gamesState.map((game, key)=>{
-        if(key >= pageState.init && key <= pageState.end){
-          return(
-            <div key={game.id}>
+      <div className={style.container}>
+        {gamesInitState[0] ? gamesState.map((game, key)=>{
+          if(key >= pageState.init && key <= pageState.end){
+            return(
               <VideoGame 
+                key={game.id}
                 name={game.name} 
+                description={game.description} 
+                released={game.released}
                 rating={game.rating}
+                background_image={game.background_image}
+                genres={game.genres}
                 id={game.id}
               />
-            </div>
-          )
-        }
-      }): responseServer.data ? [<h1 key={0}>{responseServer.data}</h1>]: <h1>Loading...</h1>}
-    </div>
+            )
+          }
+        }): responseServer.data ? <h1 key={0}>{responseServer.data}</h1>: <div className='loading'><img src="./images/loading.gif" alt="" /><h1>Loading...</h1></div>}
+      </div>
+    </section>
+
     {/* Creación de los botones por pagina segun la cantidad de juegos que exista */}
-    <div><button onClick={()=>handlerClick(-1)}>{'<'}</button>
-    {gamesInitState[0] ? gamesState.map((game, key)=>{
-      if ((key+1) % 15 === 0 || key === gamesState.length-1){
-        let numPage = Math.ceil((key+1)/15);
-        return (<button onClick={()=>handlerClick(numPage)} key={numPage} >{numPage}</button>)
-      }
-    }): <>Loading..</>}
-    <button onClick={()=>handlerClick(0)}>{'>'}</button></div>
-    {/* fin creación de botones */}
+    <footer>
+      <button className={style.btnPage} onClick={()=>handlerClick(-1)}>{'<'}</button>
+        <div className={style.btnPageNum}>
+          {gamesInitState[0] ? gamesState.map((game, key)=>{
+            if ((key+1) % 15 === 0 || key === gamesState.length-1){
+              let numPage = Math.ceil((key+1)/15);
+              return (<button onClick={()=>handlerClick(numPage)} key={numPage} >{numPage}</button>)
+            }
+          }): <>Loading..</>}
+        </div>
+      <button className={style.btnPage} onClick={()=>handlerClick(0)}>{'>'}</button>
+    </footer>
     </>
   );
 }

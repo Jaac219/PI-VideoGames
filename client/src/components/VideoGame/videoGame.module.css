@@ -1,0 +1,139 @@
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  width: 23%;
+  height: 15em;
+  margin-top: 1em;
+  margin-right: 26px;
+  border-radius: 10px;
+  background-color: #202020;
+  text-align: center;
+  position: relative;
+  box-shadow: 12px 12px 10px black;
+}
+
+.card > img {
+  display: inline-block;
+  border-radius: 10px 10px 0 0;
+  /* height: 55%; */
+  height: 65%;
+  width: 100%;
+}
+.card > h1 {
+  position: absolute;
+  color: white;
+  margin: 0;
+  font-family: 'Fredoka One', cursive;
+  font-weight: 300;
+  top: 55%; 
+  transform: translate(0, -50%);
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.containRating {
+  color: white;
+  margin: 0;
+  position: absolute;
+  top: 8%; 
+  left: 94%;
+  transform: translate(-50%, -50%);
+}
+.containRating > i {
+  position: relative;
+  font-size: 35px;
+  color: black;
+}
+.containRating > i > i {
+  position: absolute;
+  margin: 0;
+  font-size: 80%;
+  color: #f9cc01;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.containRating > i > i > h6 {
+  position: absolute;
+  margin: 0;
+  font-size: 25%;
+  color: black;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* font-weight: bold; */
+  font-family: 'Holtwood One SC', serif;
+}
+.containRating > i:hover {
+  font-size: 80px;
+  cursor: pointer;
+}
+
+
+.containGenres{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 10%;
+  width: 100%;
+  position: relative;
+}
+.containGenres > div > img{
+  display: inline-block;
+  border: 1px solid;
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.containGenres > div > p{
+  visibility: hidden;
+  width: 100%;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  margin-top: 0;
+  position: absolute;
+  left: 0;
+  z-index: 1;
+}
+.containGenres > div:hover > p {
+  visibility: visible;
+}
+
+.card > a{
+  display: inline-block;
+  height: 10%;
+  width: 100%;
+  text-decoration: none;
+}
+.card > a > p{
+  margin-bottom: auto;
+  background-color: #272727;
+  border-radius: 0 0 10px 10px;
+  color: red;
+}
+.card > a:hover > p{
+  background-color: #4b4b4b;
+  color: white;
+}
+
+@media (max-width: 1350px){
+  .card{
+    width: 30%;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 800px){
+  .card{
+    width: 45%;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 500px){
+  .card{
+    width: 70%;
+  }
+}
