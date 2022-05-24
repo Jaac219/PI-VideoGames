@@ -21,7 +21,6 @@ function VideoGames(){
 
   const dispatch = useDispatch();
 
-
   //Cuando se monta el componente se verifica si anteriormente se hizo una busqueda, de ser así
   //sobreescribe el array de los videojuegos por todos los juegos en vez de los que vienen de la busqueda
   useEffect(()=>{
@@ -31,10 +30,15 @@ function VideoGames(){
     dispatch({type: 'flagSearch', payload: false});
   }, [dispatch]);
 
-  //Aplica ordenamiento cuando se modifica el estado fijo(allVideogames) que contiene todos los videogames 
+  //Limpia la vista cuando se desmonta el componente
   useEffect(()=>{
-    handlerChangeOrder();
-  }, [gamesInitState]);
+    return (()=>{dispatch(setViewGames([]))})
+  }, []);
+
+  //Aplica ordenamiento cuando se modifica el estado fijo(allVideogames) que contiene todos los videogames 
+  // useEffect(()=>{
+  //   handlerChangeOrder();
+  // }, [gamesInitState]);
   //---------------------------------------------------------------------------------------
 
   //APlica el ordenamiento que este en los selects segun el filtrado que se aplique
@@ -85,11 +89,11 @@ function VideoGames(){
         <Route exact path='/videogames' component={SearchBar}/>
         <Route exact path='/videogames' component={Filters}/>
     </header>
-    
     <section className={style.section}>
       <div className={style.order}> 
         <label htmlFor="">Order by: </label>
         <select onChange={()=>{handlerChangeOrder()}} id="selOrderBy">
+          <option id='opcOne' value="">Select</option>
           <option value="name">Nombre</option>
           <option value="rating">Rating</option>
         </select>
@@ -115,14 +119,14 @@ function VideoGames(){
             )
           }
         }): responseServer.data ? 
-              <div className='responseError'>
-                <img src="./images/error.png" alt="" />
-                <h1>{responseServer.data}</h1>
-              </div> :
-              <div className='loading'>
-                <img src="./images/loading.gif" alt="" />
-                <h1>Loading...</h1>
-              </div>}
+          <div className='responseError'>
+            <img src="./images/error.png" alt="" />
+            <h1>{responseServer.data}</h1>
+          </div> :
+          <div className='loading'>
+            <img src="./images/loading.gif" alt="" />
+            <h1>Loading...</h1>
+          </div>}
       </div>
     </section>
 

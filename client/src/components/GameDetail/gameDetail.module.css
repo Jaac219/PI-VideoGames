@@ -29,7 +29,7 @@
 .containerDetail > h1, .containerDetail > p{
     text-align: center; 
     width: 100%;
-    margin-top: 0;
+    margin: auto;
 }
 .containerDetail > p{
     text-align: justify;
@@ -105,4 +105,15 @@
 .genres > div > p:hover, .platforms > div > p:hover{
   color: yellow;
   cursor: pointer;
+}
+
+.date{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.date > h4, .date > p{
+  display: inline-block;
+  margin: auto 0;
 }

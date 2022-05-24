@@ -12,6 +12,10 @@ export default function Filters(){
     dispatch(getGenres());
   }, [dispatch])
 
+  useEffect(()=>{
+    handlerChangeFilter();
+  }, [gamesInitState])
+
   //Evento cuando cambia el select de alguno de los filtros
   function handlerChangeFilter(){
     const filterType = document.getElementById('selFilterType').value;

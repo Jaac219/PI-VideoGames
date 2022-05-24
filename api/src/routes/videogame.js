@@ -42,8 +42,8 @@ router.post('/', async (req, res)=>{
     const {name, description, released, rating, background_image, genres, platforms} = req.body;
     let gameCreate = await Videogame.create({name, description, released, rating, background_image});
 
-    if(genres[0]) genres.forEach(element => {gameCreate.setGenres(element)});
-    if(platforms[0]) platforms.forEach(element => {gameCreate.setPlatforms(element)});
+    if(genres && genres[0]) genres.forEach(element => {gameCreate.setGenres(element)});
+    if(platforms && platforms[0]) platforms.forEach(element => {gameCreate.setPlatforms(element)});
     
     res.status(201).send('Juego creado correctamente');
   } catch (error) {

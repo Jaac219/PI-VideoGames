@@ -9,6 +9,13 @@ function validate(form){
   if (!form.name) errors.name = 'Name is required';
   if (!form.description) errors.description = 'Description is required';
   if (form.released && !form.released.match(regexDate)) errors.released = 'Format date no valid';
+  if (form.released){
+    const today = new Date();
+    const daySel = new Date(form.released)
+    if (daySel > today) {
+      errors.released = 'Date greater than today';
+    }
+  } 
   if (form.rating){
     if (Number.isNaN(Number.parseFloat(form.rating))) errors.rating = 'Rating is not number'
     else if (form.rating < 0) errors.rating = 'The value must be positive'
