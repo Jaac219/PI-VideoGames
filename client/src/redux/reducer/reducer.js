@@ -1,5 +1,5 @@
 import { GET_VIDEOGAMES, PAGINATE, VIEW_GAMES, GET_PLATFORMS,
-  GET_GENRES, SEARCH_NAME, FLAG, GET_GAME_DETAIL, RESPONSE_SERVER
+  GET_GENRES, FLAG, GET_GAME_DETAIL, RESPONSE_SERVER
 } from '../actions/actionsTypes.js';
 
 const initialState = {
@@ -10,7 +10,8 @@ const initialState = {
   videogame: {},
   page: {},
   flag: '',
-  responseServer: {}
+  responseServer: {},
+  flagSearch: true
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -22,16 +23,16 @@ const rootReducer = (state = initialState, action) => {
         viewVideoGames: action.payload,
         page: {init: 0, end: 14}
       }
-    case PAGINATE:
-      return {
-        ...state,
-        page: action.payload
-      }
     case VIEW_GAMES:
       return {
         ...state,
         viewVideoGames: action.payload,
         page: {init: 0, end: 14}
+      }
+    case PAGINATE:
+      return {
+        ...state,
+        page: action.payload
       }
     case GET_GENRES:
       return {
@@ -43,12 +44,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         platforms: action.payload
     }
-    case SEARCH_NAME:
-      return {
-        ...state,
-        allVideogames: action.payload,
-        viewVideoGames: action.payload
-      }
     case FLAG: 
       return { ...state, flag: action.payload }
     case GET_GAME_DETAIL:
@@ -61,6 +56,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         responseServer: action.payload
       }
+    case 'flagSearch':
+      return {
+        ...state,
+        flagSearch: action.payload
+    }
     default:
       return state;
   }

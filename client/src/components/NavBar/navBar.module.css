@@ -7,6 +7,9 @@
   text-decoration: none;
   color: white;
 }
+.navBar > a:hover{
+  color: red;
+}
 
 header{
   display: flex;

@@ -1,0 +1,22 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    height: 100vh;
+}
+
+.elements{
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    color: white;
+    text-align: center;
+}
+.elements > img{
+    height: 200px;
+    margin: auto;
+}
+.elements > h1, .elements > h3{
+    display: inline-block;
+    width: 100%;
+    margin: auto;
+}

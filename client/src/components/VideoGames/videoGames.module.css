@@ -38,6 +38,7 @@ footer {
   box-sizing: border-box;
 }
 
+
 @media (max-width: 1350px){
   .container{
     justify-content: space-around;

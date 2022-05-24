@@ -37,13 +37,18 @@ export default function FormCreate(){
   const responseServer = useSelector((state)=>state.responseServer);
 
   useEffect(()=>{setStateError(validate(stateForm))},[stateForm]);
+
   useEffect(()=>{
     if(responseServer.data){
       alert(responseServer.data);
       window.location.reload();
     }
-    if (responseServer.message) alert(responseServer.message)
+    if (responseServer.message){
+      alert('Error al registrar este juego');
+      window.location.reload();
+    } 
   },[responseServer]);
+  
   useEffect(()=>{
     dispatch(getGenres());
     dispatch(getPlatforms());
@@ -62,6 +67,8 @@ export default function FormCreate(){
     
     if (!Object.keys(stateError)[0]){
       dispatch(setNewGame(stateForm));
+    }else{
+      alert('Error en el formulario');
     }
   }
 

@@ -7,7 +7,7 @@ import Filters from '../Filters/Filters.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 
 import style from './videoGames.module.css';
-import { getVideoGames, paginate, setViewGames, resetGames, flag } from '../../redux/actions/actions.js';
+import { getVideoGames, paginate, setViewGames, flag } from '../../redux/actions/actions.js';
 
 
 function VideoGames(){
@@ -15,22 +15,21 @@ function VideoGames(){
   const gamesState = useSelector((state) => state.viewVideoGames);
   const pageState = useSelector((state) => state.page);
   const responseServer = useSelector((state) => state.responseServer);
-
+  //Bandera para ordenar despues de que se filtra
   const fl = useSelector((state) => state.flag);
+  const flagSearch = useSelector((state) => state.flagSearch);
 
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    dispatch(getVideoGames());
-  }, [dispatch]);
 
-  //Se vasean los 2 estados de videogames cuando se desmonta el componente 
+  //Cuando se monta el componente se verifica si anteriormente se hizo una busqueda, de ser así
+  //sobreescribe el array de los videojuegos por todos los juegos en vez de los que vienen de la busqueda
   useEffect(()=>{
-    return () => {
-      dispatch(resetGames([]));
+    if(flagSearch){
+      dispatch(getVideoGames());
     }
-  }, [])
-  //---------------------------------------------------------------------------------------
+    dispatch({type: 'flagSearch', payload: false});
+  }, [dispatch]);
 
   //Aplica ordenamiento cuando se modifica el estado fijo(allVideogames) que contiene todos los videogames 
   useEffect(()=>{
@@ -83,8 +82,8 @@ function VideoGames(){
   return (
     <>
     <header>
-      <Route exact path='/videogames' component={SearchBar}/>
-      <Route exact path='/videogames' component={Filters}/>
+        <Route exact path='/videogames' component={SearchBar}/>
+        <Route exact path='/videogames' component={Filters}/>
     </header>
     
     <section className={style.section}>
@@ -115,7 +114,15 @@ function VideoGames(){
               />
             )
           }
-        }): responseServer.data ? <h1 key={0}>{responseServer.data}</h1>: <div className='loading'><img src="./images/loading.gif" alt="" /><h1>Loading...</h1></div>}
+        }): responseServer.data ? 
+              <div className='responseError'>
+                <img src="./images/error.png" alt="" />
+                <h1>{responseServer.data}</h1>
+              </div> :
+              <div className='loading'>
+                <img src="./images/loading.gif" alt="" />
+                <h1>Loading...</h1>
+              </div>}
       </div>
     </section>
 
