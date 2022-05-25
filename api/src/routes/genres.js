@@ -15,7 +15,7 @@ router.get('/', async (req, res)=>{
     }else{
       let ax = await axios.get(`https://api.rawg.io/api/genres?key=${API_KEY}`);
       let { results } = ax.data;
-      results = results.map(val=>{return {name: val.name, image_background: val.image_background}})
+      results = results.map(val=>{return {id: val.id, name: val.name, image_background: val.image_background}})
       await Genre.bulkCreate(results);
       rs = await Genre.findAll();
       res.status(200).json(rs);

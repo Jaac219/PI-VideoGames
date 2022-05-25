@@ -35,16 +35,23 @@ export default function Filters(){
         if(bs) return val;
       })
     }
+
+    let ultimateFilter = gamesInitState;
+
+    if (filterType) ultimateFilter = filterForType(ultimateFilter, filterType);
+    if (filterGenre) ultimateFilter = filterForGenre(ultimateFilter, filterGenre);
+
+    dispatch(setViewGames(ultimateFilter));
     
-    if (filterType && filterGenre) {
-      let arrType = filterForType(gamesInitState, filterType);
-      let arrGenre = filterForGenre(arrType, filterGenre);
-      dispatch(setViewGames(arrGenre));
-    }else if(filterType && !filterGenre){
-      dispatch(setViewGames(filterForType(gamesInitState, filterType)))
-    }else if (filterGenre && !filterType){
-      dispatch(setViewGames(filterForGenre(gamesInitState, filterGenre)))
-    }
+    // if (filterType && filterGenre) {
+    //   let arrType = filterForType(gamesInitState, filterType);
+    //   let arrGenre = filterForGenre(arrType, filterGenre);
+    //   dispatch(setViewGames(arrGenre));
+    // }else if(filterType && !filterGenre){
+    //   dispatch(setViewGames(filterForType(gamesInitState, filterType)))
+    // }else if (filterGenre && !filterType){
+    //   dispatch(setViewGames(filterForGenre(gamesInitState, filterGenre)))
+    // }
   }//---------------------------------------------------------------------
 
   return (

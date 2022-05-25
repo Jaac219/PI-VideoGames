@@ -47,3 +47,10 @@ INSERT INTO platforms (name, slug, image_background) VALUES ('3DO', '3do', 'http
 INSERT INTO platforms (name, slug, image_background) VALUES ('Jaguar', 'jaguar', 'https://media.rawg.io/media/screenshots/d5f/d5f66d7e5f49a1ac445983b8be60b118.jpg');
 INSERT INTO platforms (name, slug, image_background) VALUES ('Game Gear', 'game-gear', 'https://media.rawg.io/media/screenshots/f9a/f9ac59bb4af2ca2193ee9ffb979577cf.jpg');
 INSERT INTO platforms (name, slug, image_background) VALUES ('Neo Geo', 'neogeo', 'https://media.rawg.io/media/screenshots/2da/2dab29baecf27327f4d896baa39b433d.jpg');
+
+
+
+DELETE FROM "Videogame_Genre";
+DELETE FROM "Videogame_Platform";
+DELETE FROM videogames;
+DELETE FROM genres;

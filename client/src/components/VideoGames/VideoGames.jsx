@@ -133,11 +133,11 @@ function VideoGames(){
     {/* Creación de los botones por pagina segun la cantidad de juegos que exista */}
     <footer>
       <button className={style.btnPage} onClick={()=>handlerClick(-1)}>{'<'}</button>
-        <div className={style.btnPageNum}>
+        <div id='btnPageNum' className={style.btnPageNum}>
           {gamesInitState[0] ? gamesState.map((game, key)=>{
             if ((key+1) % 15 === 0 || key === gamesState.length-1){
               let numPage = Math.ceil((key+1)/15);
-              return (<button onClick={()=>handlerClick(numPage)} key={numPage} >{numPage}</button>)
+              return (<button onClick={(e)=>handlerClick(numPage)} key={numPage} >{numPage}</button>)
             }
           }): <>Loading..</>}
         </div>

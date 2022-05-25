@@ -108,6 +108,7 @@ export const setNewGame = (data) =>{
       .then((rs)=>{
         // rs.data, rs.status
         dispatch({type: RESPONSE_SERVER, payload: rs });
+        // dispatch(getVideoGames());
       }).catch((err)=>{
         //err.message, err.name
         dispatch({type: RESPONSE_SERVER, payload: err });
