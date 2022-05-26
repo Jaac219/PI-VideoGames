@@ -46,12 +46,12 @@ export default function FormCreate(){
   useEffect(()=>{setStateError(validate(stateForm))},[stateForm]);
 
   useEffect(()=>{
-    if(responseServer.data){
-      alert(responseServer.data);
+    if(responseServer.respCreate){
+      alert(responseServer.respCreate);
       window.location.reload();
     }
-    if (responseServer.message){
-      alert('Error al registrar este juego');
+    if (responseServer.createError){
+      alert(responseServer.createError);
       window.location.reload();
     } 
   },[responseServer]);

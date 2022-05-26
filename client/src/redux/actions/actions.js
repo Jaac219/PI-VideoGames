@@ -1,5 +1,5 @@
 import { 
-  GET_VIDEOGAMES, PAGINATE, VIEW_GAMES, GET_PLATFORMS,
+  GET_VIDEOGAMES, VIEW_GAMES, GET_PLATFORMS,
   GET_GENRES, FLAG, GET_GAME_DETAIL, RESPONSE_SERVER
 } from './actionsTypes.js';
 
@@ -21,7 +21,7 @@ export const getVideoGames = () => {
 }
 
 export const getGenres = () => {
-  return  function (dispatch){
+  return function (dispatch){
     return axios.get(`http://localhost:3001/genres`)
     .then((genres)=>{
       dispatch({type: GET_GENRES, payload: genres.data })
@@ -35,13 +35,6 @@ export const getPlatforms = () => {
     .then((platform)=>{
       dispatch({type: GET_PLATFORMS, payload: platform.data })
     })
-  }
-}
-
-export const paginate = (page) => {
-  return{
-    type: PAGINATE,
-    payload: {init: (page-1)*15, end: (page*15)-1} //Convierte el numero de pagina en valor inicial y final en el arreglo
   }
 }
 
@@ -63,8 +56,8 @@ export const searchForName = (name) => {
             dispatch({type: GET_VIDEOGAMES, payload: allGames.data })
           }else{
             dispatch({type: RESPONSE_SERVER, payload: {
-            data: 'No se encontraron resultados',
-            status: allGames.status
+              data: 'No se encontraron resultados',
+              status: allGames.status
             }})
           }
         }).catch(err=>{
@@ -106,12 +99,14 @@ export const setNewGame = (data) =>{
     return (
       axios.post(`http://localhost:3001/videogame`, data)
       .then((rs)=>{
-        // rs.data, rs.status
-        dispatch({type: RESPONSE_SERVER, payload: rs });
-        // dispatch(getVideoGames());
+        dispatch({type: RESPONSE_SERVER, payload: {
+          respCreate: rs.data,
+          statusCreate: rs.status
+        }});
       }).catch((err)=>{
-        //err.message, err.name
-        dispatch({type: RESPONSE_SERVER, payload: err });
+        dispatch({type: RESPONSE_SERVER, payload: {
+          createError: err.message
+        } });
       })
     )
   }

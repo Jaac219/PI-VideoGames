@@ -1,4 +1,4 @@
-import { GET_VIDEOGAMES, PAGINATE, VIEW_GAMES, GET_PLATFORMS,
+import { GET_VIDEOGAMES, VIEW_GAMES, GET_PLATFORMS,
   GET_GENRES, FLAG, GET_GAME_DETAIL, RESPONSE_SERVER
 } from '../actions/actionsTypes.js';
 
@@ -8,7 +8,6 @@ const initialState = {
   genres: [],
   platforms: [],
   videogame: {},
-  page: {},
   flag: '',
   responseServer: {},
   flagSearch: true
@@ -21,18 +20,11 @@ const rootReducer = (state = initialState, action) => {
         ...state, 
         allVideogames: action.payload,
         viewVideoGames: action.payload,
-        page: {init: 0, end: 14}
       }
     case VIEW_GAMES:
       return {
         ...state,
         viewVideoGames: action.payload,
-        page: {init: 0, end: 14}
-      }
-    case PAGINATE:
-      return {
-        ...state,
-        page: action.payload
       }
     case GET_GENRES:
       return {

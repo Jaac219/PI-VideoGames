@@ -1,7 +1,8 @@
 import style from './searchBar.module.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {useDispatch} from "react-redux";
 import { searchForName, getVideoGames } from '../../redux/actions/actions.js'
+import {RESPONSE_SERVER} from '../../redux/actions/actionsTypes.js';
 
 export default function SearchBar(){
   const dispatch = useDispatch();

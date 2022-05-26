@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,8 +13,10 @@ import { getVideoGames, paginate, setViewGames, flag } from '../../redux/actions
 function VideoGames(){
   const gamesInitState = useSelector((state) => state.allVideogames);
   const gamesState = useSelector((state) => state.viewVideoGames);
-  const pageState = useSelector((state) => state.page);
   const responseServer = useSelector((state) => state.responseServer);
+
+  const [pageState, setpageState] = useState({page: 1, numElements: 10});
+
   //Bandera para ordenar despues de que se filtra
   const fl = useSelector((state) => state.flag);
   const flagSearch = useSelector((state) => state.flagSearch);
@@ -35,24 +37,24 @@ function VideoGames(){
     return (()=>{dispatch(setViewGames([]))})
   }, []);
 
-  //Aplica ordenamiento cuando se modifica el estado fijo(allVideogames) que contiene todos los videogames 
-  // useEffect(()=>{
-  //   handlerChangeOrder();
-  // }, [gamesInitState]);
-  //---------------------------------------------------------------------------------------
-
   //APlica el ordenamiento que este en los selects segun el filtrado que se aplique
   useEffect(()=>{
     if (fl == 'filter') {handlerChangeOrder()}
+    handlerClick(1);
   }, [gamesState]);
   //---------------------------------------------------------------------------------------
   
-  //Control para los botones siguiente y anterior del paginado
+  //Control para indicar en cual pagina se quiere parar
   function handlerClick(numPage){
-    if (numPage === 0) numPage = Math.ceil(pageState.init / 15)+2; //Envia el valor de la pagina del boton siguiente al actual
-    if (numPage === -1) numPage = Math.ceil(pageState.init / 15); //Envia el valor de la pagina del boton anterior al actual
-    if (numPage > 0 && numPage <= Math.ceil(gamesState.length/15)){ //Valida que no envie valor menor a la pagina 1 ni superior al valor maximo de las paginas
-      dispatch(paginate(numPage))
+    if (numPage === 0) numPage = pageState.page + 1; //Envia el valor de la pagina del boton siguiente al actual
+    if (numPage === -1) numPage = pageState.page - 1; //Envia el valor de la pagina del boton anterior al actual
+    if (numPage > 0 && numPage <= Math.ceil(gamesState.length/pageState.numElements)){ //Valida que no envie valor menor a la pagina 1 ni superior al valor maximo de las paginas
+      let groupBtns = document.getElementsByClassName('btnsPaginate');
+      for (let i = 1; i <= groupBtns.length; i++) {
+        if (numPage == i) document.getElementById('btnPage'+i).style.color = 'red';
+        else document.getElementById('btnPage'+i).style.color = 'white';
+      }
+      setpageState({...pageState, page: numPage});
     }
   }// -----------------------------------------------------------------------
 
@@ -103,8 +105,8 @@ function VideoGames(){
         </select>
       </div>
       <div className={style.container}>
-        {gamesInitState[0] ? gamesState.map((game, key)=>{
-          if(key >= pageState.init && key <= pageState.end){
+        {gamesState[0] ? gamesState.map((game, key)=>{
+          if(key >= (pageState.page-1)*pageState.numElements && key <= (pageState.page*pageState.numElements)-1){
             return(
               <VideoGame 
                 key={game.id}
@@ -118,10 +120,10 @@ function VideoGames(){
               />
             )
           }
-        }): responseServer.data ? 
+        }): gamesInitState[0] || responseServer.data ? 
           <div className='responseError'>
             <img src="./images/error.png" alt="" />
-            <h1>{responseServer.data}</h1>
+            <h1>{responseServer.data ? responseServer.data: 'Sin resultados'}</h1>
           </div> :
           <div className='loading'>
             <img src="./images/loading.gif" alt="" />
@@ -135,9 +137,11 @@ function VideoGames(){
       <button className={style.btnPage} onClick={()=>handlerClick(-1)}>{'<'}</button>
         <div id='btnPageNum' className={style.btnPageNum}>
           {gamesInitState[0] ? gamesState.map((game, key)=>{
-            if ((key+1) % 15 === 0 || key === gamesState.length-1){
-              let numPage = Math.ceil((key+1)/15);
-              return (<button onClick={(e)=>handlerClick(numPage)} key={numPage} >{numPage}</button>)
+            if ((key+1) % pageState.numElements === 0 || key === gamesState.length-1){
+              let numPage = Math.ceil((key+1)/pageState.numElements);
+              return (
+                <button id={'btnPage'+numPage} className='btnsPaginate' onClick={(e)=>handlerClick(numPage)} key={numPage} >{numPage}</button>
+              )
             }
           }): <>Loading..</>}
         </div>

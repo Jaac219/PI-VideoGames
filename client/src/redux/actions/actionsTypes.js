@@ -1,5 +1,4 @@
 export const GET_VIDEOGAMES = 'GET_VIDEOGAMES';
-export const PAGINATE = 'PAGINATE';
 export const VIEW_GAMES = 'VIEW_GAMES';
 export const GET_GENRES = 'GET_GENRES';
 export const FLAG = 'FLAG';
