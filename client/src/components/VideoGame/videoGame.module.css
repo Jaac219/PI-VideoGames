@@ -119,6 +119,36 @@
   color: white;
 }
 
+.lnk {
+  width: 80% !important;
+  margin-bottom: 2px;
+}
+.lnk > p{
+  border-radius: 0 0 0 10px !important;
+}
+.btnsChanges {
+  margin-top: auto;
+  width: 20%;
+}
+.btnsChanges > button {
+  background: none;
+  cursor: pointer;
+  border: none;
+  width: 50%;
+  margin-bottom: 1px;
+}
+.btnsChanges > button:hover {
+  color: white !important;
+  font-size: 15px;
+}
+.btnsChanges> button:nth-child(2) {
+  border-radius: 0 0 10px 0;
+  color: #dc3545;
+}
+.btnsChanges> button:nth-child(1) {
+  color: #ffc107;
+}
+
 @media (max-width: 1350px){
   .card{
     width: 30%;

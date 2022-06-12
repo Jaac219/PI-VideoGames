@@ -71,7 +71,10 @@
   width: 100%;
 }
 .btnImage{
-  width: 100% !important;
+  width: 80% !important;
+}
+.imgAdd{
+  margin: auto;
 }
 
 
@@ -119,6 +122,24 @@
 }
 .btnSubmit > button:hover{
   background-color: #28a746c4;
+}
+
+
+.containerBtnSm{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.buttonSm{
+  width: 50%;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #28a745;
+  cursor: pointer;
+  color: white;
+}
+.buttonSm:nth-child(1){
+  background-color: #dc3545;
 }
 
 @media (max-width: 600px){

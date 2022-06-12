@@ -48,7 +48,7 @@ INSERT INTO platforms (name, slug, image_background) VALUES ('Jaguar', 'jaguar',
 INSERT INTO platforms (name, slug, image_background) VALUES ('Game Gear', 'game-gear', 'https://media.rawg.io/media/screenshots/f9a/f9ac59bb4af2ca2193ee9ffb979577cf.jpg');
 INSERT INTO platforms (name, slug, image_background) VALUES ('Neo Geo', 'neogeo', 'https://media.rawg.io/media/screenshots/2da/2dab29baecf27327f4d896baa39b433d.jpg');
 
-
+INSERT INTO users (name, email, password) VALUES ('Johan', 'jaac219@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055');
 
 DELETE FROM "Videogame_Genre";
 DELETE FROM "Videogame_Platform";

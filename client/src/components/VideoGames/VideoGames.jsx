@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Route } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 
 import VideoGame from '../VideoGame/VideoGame.jsx';
 import Filters from '../Filters/Filters.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
+import Error from '../Error/Error.jsx';
+import Loading from '../Loading/Loading.jsx';
+import NavBar from '../NavBar/NavBar.jsx';
 
 import style from './videoGames.module.css';
-import { getVideoGames, paginate, setViewGames, flag } from '../../redux/actions/actions.js';
+import { getVideoGames, actionOrderBy, orderOrFilter, changeFlagSearch } from '../../redux/actions/actions.js';
 
 
 function VideoGames(){
   const gamesInitState = useSelector((state) => state.allVideogames);
   const gamesState = useSelector((state) => state.viewVideoGames);
-  const responseServer = useSelector((state) => state.responseServer);
+  const error = useSelector((state) => state.error);
 
-  const [pageState, setpageState] = useState({page: 1, numElements: 10});
+  const [pageState, setpageState] = useState({page: 1, numElements: 15});
 
   //Bandera para ordenar despues de que se filtra
-  const fl = useSelector((state) => state.flag);
+  const ofl = useSelector((state) => state.orderOrFilter);
   const flagSearch = useSelector((state) => state.flagSearch);
 
   const dispatch = useDispatch();
@@ -26,25 +28,19 @@ function VideoGames(){
   //Cuando se monta el componente se verifica si anteriormente se hizo una busqueda, de ser así
   //sobreescribe el array de los videojuegos por todos los juegos en vez de los que vienen de la busqueda
   useEffect(()=>{
-    if(flagSearch){
-      dispatch(getVideoGames());
-    }
-    dispatch({type: 'flagSearch', payload: false});
+    if(flagSearch) dispatch(getVideoGames());
+    dispatch(changeFlagSearch(false));
   }, [dispatch]);
 
-  //Limpia la vista cuando se desmonta el componente
+  
+  //Aplica el ordenamiento que este en los selects segun el filtrado que se aplique
   useEffect(()=>{
-    return (()=>{dispatch(setViewGames([]))})
-  }, []);
-
-  //APlica el ordenamiento que este en los selects segun el filtrado que se aplique
-  useEffect(()=>{
-    if (fl == 'filter') {handlerChangeOrder()}
+    if (ofl == 'filter') handlerChangeOrder();
     handlerClick(1);
   }, [gamesState]);
   //---------------------------------------------------------------------------------------
   
-  //Control para indicar en cual pagina se quiere parar
+  //Control para indicar en cual pagina se quiere parar y dar estilo al numero de la pagina
   function handlerClick(numPage){
     if (numPage === 0) numPage = pageState.page + 1; //Envia el valor de la pagina del boton siguiente al actual
     if (numPage === -1) numPage = pageState.page - 1; //Envia el valor de la pagina del boton anterior al actual
@@ -63,33 +59,18 @@ function VideoGames(){
   function handlerChangeOrder(){
     let orderBy = document.getElementById('selOrderBy').value;
     let ascDesc = document.getElementById('ascDesc').value;
-
     if (orderBy){
-      dispatch(flag('order'));
-      let order = gamesState.map((r)=>r);
-      if (ascDesc === 'ASC') {
-        order = order.sort((a, b)=>{
-          if(a[orderBy] > b[orderBy]) return 1;
-          if(a[orderBy] < b[orderBy]) return -1;
-          return 0;
-        })
-      }else{
-        order = order.sort((a, b)=>{
-          if (a[orderBy] > b[orderBy]) return -1
-          if (a[orderBy] < b[orderBy]) return 1
-          else return 0;
-        });
-      }
-      dispatch(setViewGames(order));
+      dispatch(orderOrFilter('order'));
+      dispatch(actionOrderBy(orderBy, ascDesc));
     }
   }//------------------------------------------------------------------------
   
-  
   return (
     <>
+    {/* <NavBar /> */}
     <header>
-        <Route exact path='/videogames' component={SearchBar}/>
-        <Route exact path='/videogames' component={Filters}/>
+      <SearchBar />
+      <Filters />
     </header>
     <section className={style.section}>
       <div className={style.order}> 
@@ -120,15 +101,9 @@ function VideoGames(){
               />
             )
           }
-        }): gamesInitState[0] || responseServer.data ? 
-          <div className='responseError'>
-            <img src="./images/error.png" alt="" />
-            <h1>{responseServer.data ? responseServer.data: 'Sin resultados'}</h1>
-          </div> :
-          <div className='loading'>
-            <img src="./images/loading.gif" alt="" />
-            <h1>Loading...</h1>
-          </div>}
+        }): gamesInitState[0] || error ?
+          <Error error={error} /> :
+          <Loading /> }
       </div>
     </section>
 
@@ -136,14 +111,14 @@ function VideoGames(){
     <footer>
       <button className={style.btnPage} onClick={()=>handlerClick(-1)}>{'<'}</button>
         <div id='btnPageNum' className={style.btnPageNum}>
-          {gamesInitState[0] ? gamesState.map((game, key)=>{
+          {gamesState[0] ? gamesState.map((game, key)=>{
             if ((key+1) % pageState.numElements === 0 || key === gamesState.length-1){
               let numPage = Math.ceil((key+1)/pageState.numElements);
               return (
                 <button id={'btnPage'+numPage} className='btnsPaginate' onClick={(e)=>handlerClick(numPage)} key={numPage} >{numPage}</button>
               )
             }
-          }): <>Loading..</>}
+          }): null}
         </div>
       <button className={style.btnPage} onClick={()=>handlerClick(0)}>{'>'}</button>
     </footer>

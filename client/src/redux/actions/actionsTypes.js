@@ -1,7 +1,11 @@
 export const GET_VIDEOGAMES = 'GET_VIDEOGAMES';
-export const VIEW_GAMES = 'VIEW_GAMES';
 export const GET_GENRES = 'GET_GENRES';
-export const FLAG = 'FLAG';
+export const ORDER_OR_FILTER = 'ORDER_OR_FILTER';
 export const GET_GAME_DETAIL = 'GET_GAME_DETAIL';
 export const GET_PLATFORMS = 'GET_PLATFORMS';
-export const RESPONSE_SERVER = 'RESPONSE_SERVER';
+export const ERROR = 'RESPONSE_SERVER';
+export const ORDER_BY = 'ORDER_BY';
+export const FILTER = 'FILTER';
+export const FLAG_SEARCH = 'FLAG_SEARCH';
+export const SUCCESS = 'SUCCESS';
+export const GET_USER = 'GET_USER';

@@ -1,9 +1,36 @@
 import { Link } from 'react-router-dom';
 import style from './videoGame.module.css';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { actionDelete, getVideoGames } from "../../redux/actions/actions.js"
+
+import ModalEdit from '../ModalEdit/ModalEdit';
+
+import { useEffect, useState } from 'react';
 
 export default function VideoGame(props){
   const dbGenres = useSelector(state => state.genres);
+  const { error, success } = useSelector(state => state);
+  const dispatch = useDispatch();
+
+  const [show, setShow] = useState(false);
+
+  useEffect(()=>{
+    if (error) alert(error);
+    if (success){
+      alert(success);
+      dispatch(getVideoGames());
+    } 
+  }, [error, success])
+
+  function onClickDelete(id){
+    if(window.confirm('Seguro que quiere elminar este juego')){
+      dispatch(actionDelete(id));
+    }
+  }
+  function showModal(opc) { 
+    setShow(opc);
+  }
+
   return (
     <div className={style.card}>
       <img src={props.background_image ? props.background_image: './images/background_default.jpg'} alt="Imagen del juego" />
@@ -30,9 +57,18 @@ export default function VideoGame(props){
           });
         })}
       </div>
-      <Link to={`/videogames/game/${props.id}`}>
+      <Link className={isNaN(props.id) ? style.lnk : ''} to={`/videogames/game/${props.id}`}>
         <p>view more</p>
       </Link>
+      {isNaN(props.id) &&
+        <>
+        <div className={style.btnsChanges}>
+          <button onClick={()=>{showModal(true)}}><i className="fa fa-table" aria-hidden="true"></i></button>
+          <button onClick={()=>{onClickDelete(props.id)}}><i className="fa fa-trash" aria-hidden="true"></i></button>
+        </div>
+        <ModalEdit show={show} onClose={showModal} gameId={props.id}/>
+        </>
+      }
     </div>
   );
 }

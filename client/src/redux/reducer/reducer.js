@@ -1,5 +1,5 @@
-import { GET_VIDEOGAMES, VIEW_GAMES, GET_PLATFORMS,
-  GET_GENRES, FLAG, GET_GAME_DETAIL, RESPONSE_SERVER
+import { GET_VIDEOGAMES, GET_PLATFORMS, FILTER, FLAG_SEARCH, SUCCESS,
+  GET_GENRES, ORDER_OR_FILTER, GET_GAME_DETAIL, ERROR, ORDER_BY, GET_USER
 } from '../actions/actionsTypes.js';
 
 const initialState = {
@@ -8,9 +8,11 @@ const initialState = {
   genres: [],
   platforms: [],
   videogame: {},
-  flag: '',
-  responseServer: {},
-  flagSearch: true
+  orderOrFilter: '',
+  error: '',
+  success: '',
+  flagSearch: true,
+  user: {}
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -19,40 +21,65 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state, 
         allVideogames: action.payload,
-        viewVideoGames: action.payload,
-      }
-    case VIEW_GAMES:
-      return {
-        ...state,
-        viewVideoGames: action.payload,
+        viewVideoGames: action.payload
       }
     case GET_GENRES:
-      return {
-        ...state,
-        genres: action.payload
-      }
+      return {...state, genres: action.payload }
     case GET_PLATFORMS:
-      return {
-        ...state,
-        platforms: action.payload
-    }
-    case FLAG: 
-      return { ...state, flag: action.payload }
+      return { ...state, platforms: action.payload }
+    case FILTER: 
+      function filterForType(arr, filter){
+        return arr.filter(val=>{
+          if(filter == 'rawg' && Number.isInteger(val.id)) return val
+          if(filter == 'database' && !Number.isInteger(val.id)) return val
+          if(filter == 'all') return val
+        })
+      }
+      function filterForGenre(arr, filter){
+        return arr.filter(val=>{
+          let bs = val.genres.find(v=>v.id==filter);
+          if(bs) return val;
+        })
+      }
+      let filterType = action.payload.filterType;
+      let filterGenre = action.payload.filterGenre;
+
+      let ultimateFilter = state.allVideogames;
+      
+      if (filterType) ultimateFilter = filterForType(ultimateFilter, filterType);
+      if (filterGenre) ultimateFilter = filterForGenre(ultimateFilter, filterGenre);
+
+      return {...state,  viewVideoGames: ultimateFilter}
+    case ORDER_BY:
+      let order = [...state.viewVideoGames];
+      let ascDesc = action.payload.ascDesc;
+      let orderBy = action.payload.orderBy;
+      if (ascDesc === 'ASC') {
+        order = order.sort((a, b)=>{
+          if(a[orderBy] > b[orderBy]) return 1;
+          if(a[orderBy] < b[orderBy]) return -1;
+          return 0;
+        })
+      }else{
+        order = order.sort((a, b)=>{
+          if (a[orderBy] > b[orderBy]) return -1
+          if (a[orderBy] < b[orderBy]) return 1
+          else return 0;
+        });
+      }
+      return {...state, viewVideoGames: order}
+    case ORDER_OR_FILTER: 
+      return { ...state, orderOrFilter: action.payload }
     case GET_GAME_DETAIL:
-      return {
-        ...state,
-        videogame: action.payload
-      }
-    case RESPONSE_SERVER:
-      return {
-        ...state,
-        responseServer: action.payload
-      }
-    case 'flagSearch':
-      return {
-        ...state,
-        flagSearch: action.payload
-    }
+      return {...state, videogame: action.payload }
+    case ERROR:
+      return { ...state, error: action.payload }
+    case FLAG_SEARCH:
+      return {...state, flagSearch: action.payload}
+    case SUCCESS:
+      return {...state, success: action.payload}
+    case GET_USER:
+      return {...state, user: action.payload}
     default:
       return state;
   }

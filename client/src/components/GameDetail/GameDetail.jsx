@@ -2,21 +2,20 @@ import style from './gameDetail.module.css';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getGameDetail, resetGame } from '../../redux/actions/actions.js'
+import { getGameDetail } from '../../redux/actions/actions.js';
+
+import Error from '../Error/Error.jsx';
+import Loading from '../Loading/Loading.jsx';
 
 export default function Landing(){
   const { id } = useParams();
   const dispatch = useDispatch();
   const gameDetail = useSelector((state)=>state.videogame);
-  const responseServer = useSelector((state) => state.responseServer);
+  const error = useSelector((state) => state.error);
 
   useEffect(()=>{
     dispatch(getGameDetail(id));
   }, [dispatch])
-  
-  useEffect(()=>{
-    return (()=>{dispatch(resetGame())})
-  },[dispatch])
 
   let ConvertStringToHTML = function (str) {
     var dom = document.createElement('div');
@@ -74,15 +73,9 @@ export default function Landing(){
             })}
           </div>
         </div>
-      </div> : responseServer.data ?
-      <div className='responseError'>
-        <img src="../../images/error_1.png" alt="" />
-        <h1>{responseServer.data}</h1>
-      </div> : 
-      <div className='loading'>
-        <img src="../../images/loading.gif" alt="" />
-        <h1>Loading...</h1>
-      </div>
+      </div> : error ?
+      <Error error={error} /> : 
+      <Loading />
     }
     </>
   );

@@ -1,5 +1,6 @@
 .container{
   display: flex;
+  flex-wrap: wrap;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -7,6 +8,7 @@
   width: 100%;
   padding: 5%;
   box-sizing: border-box;
+  align-content: center;
 }
 
 .container > a{
