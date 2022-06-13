@@ -22,8 +22,8 @@ router.post('/', async (req, res)=>{
 });
 
 router.post('/getUser', async (req, res, next) => {
-	try {
-	  const { id, email } = jwt.verify(req.body.token, SECRET_KEY);
+  try {
+    const { id, email } = jwt.verify(req.body.token, SECRET_KEY);
 	  const user = await User.findOne({where: { id, email }});
 	  res.status(200).json(user);
 	} catch (error) {

@@ -1,4 +1,4 @@
-import { GET_VIDEOGAMES, GET_PLATFORMS, FILTER, FLAG_SEARCH, SUCCESS,
+import { GET_VIDEOGAMES, GET_PLATFORMS, FILTER, FLAG_SEARCH, SUCCESS, LOADING_USER,
   GET_GENRES, ORDER_OR_FILTER, GET_GAME_DETAIL, ERROR, ORDER_BY, GET_USER
 } from '../actions/actionsTypes.js';
 
@@ -12,7 +12,8 @@ const initialState = {
   error: '',
   success: '',
   flagSearch: true,
-  user: {}
+  user: {},
+  loadingUser: true
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -80,6 +81,8 @@ const rootReducer = (state = initialState, action) => {
       return {...state, success: action.payload}
     case GET_USER:
       return {...state, user: action.payload}
+    case LOADING_USER:
+      return {...state, loadingUser: action.payload}  
     default:
       return state;
   }

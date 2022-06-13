@@ -1,5 +1,5 @@
 import { 
-  GET_VIDEOGAMES, GET_PLATFORMS, FILTER, FLAG_SEARCH, SUCCESS,
+  GET_VIDEOGAMES, GET_PLATFORMS, FILTER, FLAG_SEARCH, SUCCESS, LOADING_USER,
   GET_GENRES, ORDER_OR_FILTER, GET_GAME_DETAIL, ERROR, ORDER_BY, GET_USER
 } from './actionsTypes.js';
 
@@ -154,15 +154,21 @@ export const login = (data) =>{
 }
 
 export const getUser = (token) => {
-  return function(dispatch){
+  return async function(dispatch){
     return(
-      axios.post(`http://localhost:3001/login/getUser`, token)
+      await axios.post(`http://localhost:3001/login/getUser`, {token})
         .then((resp)=>{
           dispatch({type: GET_USER, payload: resp.data})
+          dispatch(actionLoadingUser(false));
         }).catch(()=>{
           alert('Error en la autenticación');
           localStorage.removeItem("token_id");
+          dispatch(actionLoadingUser(false));
         })
     )
-  }
+  };
+}
+
+export const actionLoadingUser = (payload) =>{
+  return {type: LOADING_USER, payload}
 }

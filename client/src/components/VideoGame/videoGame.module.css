@@ -149,6 +149,16 @@
   color: #ffc107;
 }
 
+@media (min-width: 2000px){
+  .card{
+    width: 10%;
+  }
+}
+@media (min-width: 1500px){
+  .card{
+    width: 15%;
+  }
+}
 @media (max-width: 1350px){
   .card{
     width: 30%;

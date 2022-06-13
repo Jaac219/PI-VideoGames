@@ -9,3 +9,4 @@ export const FILTER = 'FILTER';
 export const FLAG_SEARCH = 'FLAG_SEARCH';
 export const SUCCESS = 'SUCCESS';
 export const GET_USER = 'GET_USER';
+export const LOADING_USER = 'LOADING_USER';

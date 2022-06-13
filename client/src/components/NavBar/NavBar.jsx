@@ -9,14 +9,18 @@ export default function NavBar(){
     window.location.reload();
   }
 
-  return (
-    <div>
-      <nav className={style.navBar}>
-        <Link to='/'>Home / </Link>
-        <Link to='/videogames'>Videogames / </Link>
-        <Link to='/videogames/create'>Crear  </Link>
-        {user.id && <button onClick={()=>{logout()}}>Logout</button>}
-      </nav>
-    </div>
-  );
+  if(user.id){ 
+    return (
+      <div>
+        <nav className={style.navBar}>
+          <Link to='/'>Home / </Link>
+          <Link to='/videogames'>Videogames / </Link>
+          <Link to='/videogames/create'>Crear  </Link>
+          <button onClick={()=>{logout()}}>Logout</button>
+        </nav>
+      </div>
+    )
+  }else{
+    return null
+  }
 }

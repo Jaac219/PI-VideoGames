@@ -29,7 +29,7 @@ router.get('/', async (req, res)=>{
       let videoGames = await Videogame.findAll({ include: [{model: Genre},{model: Platform}] });
       videoGames = videoGames.map(val=>val.dataValues);
     
-      for (let i = 1; i <= 1; i++) {
+      for (let i = 1; i <= 5; i++) {
         let rs = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`);
         videoGames = [...rs.data.results, ...videoGames];
       }
