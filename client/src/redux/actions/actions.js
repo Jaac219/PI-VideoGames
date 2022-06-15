@@ -11,7 +11,7 @@ export const getVideoGames = () => {
     dispatch({type: ERROR, payload: '' })
     dispatch({type: GET_VIDEOGAMES, payload: []})
     return (
-      axios.get(`http://localhost:3001/videogames`)
+      axios.get(`https://api-rest-videogames.herokuapp.com/videogames`)
         .then((allGames)=>{
           dispatch({type: GET_VIDEOGAMES, payload: allGames.data })
         }).catch((err)=>{
@@ -23,7 +23,7 @@ export const getVideoGames = () => {
 
 export const getGenres = () => {
   return function (dispatch){
-    return axios.get(`http://localhost:3001/genres`)
+    return axios.get(`https://api-rest-videogames.herokuapp.com/genres`)
     .then((genres)=>{
       dispatch({type: GET_GENRES, payload: genres.data })
     })
@@ -32,7 +32,7 @@ export const getGenres = () => {
 
 export const getPlatforms = () => {
   return  function (dispatch){
-    return axios.get(`http://localhost:3001/platforms`)
+    return axios.get(`https://api-rest-videogames.herokuapp.com/platforms`)
     .then((platform)=>{
       dispatch({type: GET_PLATFORMS, payload: platform.data })
     })
@@ -56,7 +56,7 @@ export const searchForName = (name) => {
     dispatch({type: GET_VIDEOGAMES, payload: []})
     dispatch({type: ERROR, payload: '' })
     return (
-      axios.get(`http://localhost:3001/videogames?name=${name}`)
+      axios.get(`https://api-rest-videogames.herokuapp.com/videogames?name=${name}`)
         .then((allGames)=>{
           if (allGames.status === 200) {
             dispatch({type: GET_VIDEOGAMES, payload: allGames.data })
@@ -75,7 +75,7 @@ export const getGameDetail = (id) =>{
       dispatch({type: GET_GAME_DETAIL, payload: {} })
       dispatch({type: ERROR, payload: '' })
       return (
-        axios.get(`http://localhost:3001/videogame/${id}`)
+        axios.get(`https://api-rest-videogames.herokuapp.com/videogame/${id}`)
           .then((detail)=>{
             if (detail.status === 200) {
               dispatch({type: GET_GAME_DETAIL, payload: detail.data })
@@ -96,7 +96,7 @@ export const setNewGame = (data) =>{
     dispatch({type: ERROR, payload: '' })
     dispatch({type: SUCCESS, payload: '' })
     return (
-      axios.post(`http://localhost:3001/videogame`, data)
+      axios.post(`https://api-rest-videogames.herokuapp.com/videogame`, data)
       .then((rs)=>{
         dispatch({type: SUCCESS, payload: 'Juego creado correctamente'});
       }).catch((err)=>{
@@ -111,7 +111,7 @@ export const actionDelete = (id) => {
     dispatch({type: ERROR, payload: '' })
     dispatch({type: SUCCESS, payload: '' })
     return (
-      axios.delete(`http://localhost:3001/videogame/${id}`)
+      axios.delete(`https://api-rest-videogames.herokuapp.com/videogame/${id}`)
         .then((rs)=>{
           dispatch({type: SUCCESS, payload: 'Juego eliminado correctamente'});
         }).catch((err)=>{
@@ -127,7 +127,7 @@ export const actionUpdate = (data)=>{
     dispatch({type: SUCCESS, payload: ''});
     dispatch({type: ERROR, payload: ''});
     return(
-      axios.put(`http://localhost:3001/videogame`, data)
+      axios.put(`https://api-rest-videogames.herokuapp.com/videogame`, data)
         .then(()=>{
           dispatch({type: SUCCESS, payload: 'Juego actualizado correctamente'})
         }).catch(()=>{
@@ -144,7 +144,7 @@ export const changeFlagSearch = (flag) =>{
 export const login = (data) =>{
   return function(dispatch){
     return (
-      axios.post('http://localhost:3001/login', data)
+      axios.post('https://api-rest-videogames.herokuapp.com/login', data)
         .then((resp)=>{
           localStorage.setItem("token_id", resp.data.token);
           dispatch({type: GET_USER, payload: resp.data.user})
@@ -156,7 +156,7 @@ export const login = (data) =>{
 export const getUser = (token) => {
   return async function(dispatch){
     return(
-      await axios.post(`http://localhost:3001/login/getUser`, {token})
+      await axios.post(`https://api-rest-videogames.herokuapp.com/login/getUser`, {token})
         .then((resp)=>{
           dispatch({type: GET_USER, payload: resp.data})
           dispatch(actionLoadingUser(false));
