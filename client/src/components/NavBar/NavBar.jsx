@@ -13,9 +13,9 @@ export default function NavBar(){
     return (
       <div>
         <nav className={style.navBar}>
-          <Link to='/'>Home / </Link>
-          <Link to='/videogames'>Videogames / </Link>
-          <Link to='/videogames/create'>Crear  </Link>
+          <Link to={`/`}>Home / </Link>
+          <Link to={'/videogames'}>Videogames / </Link>
+          <Link to={'/videogames/create'}>Crear  </Link>
           <button onClick={()=>{logout()}}>Logout</button>
         </nav>
       </div>

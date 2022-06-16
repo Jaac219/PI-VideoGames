@@ -9,7 +9,7 @@ export default function Landing(){
   return (
     <div style={{backgroundImage: `url(${PUBLIC_URL}/images/landing.png)`}} className={style.container}>
         { user.id ? 
-          <Link to='/videogames'><img src={`${PUBLIC_URL}/images/play.png`} alt="" /></Link>:
+          <Link to={'/videogames'}><img src={`${PUBLIC_URL}/images/play.png`} alt="" /></Link>:
           <Login />
         }
     </div>

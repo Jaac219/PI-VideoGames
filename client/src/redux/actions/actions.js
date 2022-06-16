@@ -143,11 +143,13 @@ export const changeFlagSearch = (flag) =>{
 
 export const login = (data) =>{
   return function(dispatch){
+    dispatch(actionLoadingUser(true))
     return (
       axios.post('https://api-rest-videogames.herokuapp.com/login', data)
-        .then((resp)=>{
-          localStorage.setItem("token_id", resp.data.token);
-          dispatch({type: GET_USER, payload: resp.data.user})
+      .then((resp)=>{
+        localStorage.setItem("token_id", resp.data.token);
+        dispatch({type: GET_USER, payload: resp.data.user})
+        dispatch(actionLoadingUser(false))
         })  
     )
   }

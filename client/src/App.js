@@ -13,7 +13,6 @@ import Error404 from './components/Error404/Error404.jsx';
 import Loading from './components/Loading/Loading.jsx';
 
 function App() {
-  const { PUBLIC_URL } = process.env;
   const { user, loadingUser } = useSelector((state)=>state);
   const dispatch = useDispatch();
   useEffect(()=>{
@@ -30,12 +29,12 @@ function App() {
       <Routes>
       {loadingUser ? <Route path="*" element={<Loading />} /> :
        <>
-        <Route path={`${PUBLIC_URL}/`} element={<Landing />} />
-        <Route path={`${PUBLIC_URL}/videogames`} element={user.id ? <VideoGames /> : <Navigate to={`${PUBLIC_URL}/`}/>} />
-        <Route path={`${PUBLIC_URL}/videogames/game/:id`} element={user.id ? <GameDetail /> : <Navigate to={`${PUBLIC_URL}/`}/>} />
-        <Route path={`${PUBLIC_URL}/videogames/create`} element={user.id ? <FormCreate /> : <Navigate to={`${PUBLIC_URL}/`}/>} />
-        <Route exact path={`${PUBLIC_URL}/err404`} element={<Error404 />} />
-        <Route path="*" element={<Navigate to={`${PUBLIC_URL}/err404`} replace />}/>
+        <Route path={`/`} element={<Landing />} />
+        <Route path={`/videogames`} element={user.id ? <VideoGames /> : <Navigate to={`/`}/>} />
+        <Route path={`/videogames/game/:id`} element={user.id ? <GameDetail /> : <Navigate to={`/`}/>} />
+        <Route path={`/videogames/create`} element={user.id ? <FormCreate /> : <Navigate to={`/`}/>} />
+        <Route exact path={`/err404`} element={<Error404 />} />
+        <Route path="*" element={<Navigate to={`/err404`} replace />}/>
        </>
       }
       </Routes>

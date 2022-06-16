@@ -8,6 +8,7 @@ import ModalEdit from '../ModalEdit/ModalEdit';
 import { useEffect, useState } from 'react';
 
 export default function VideoGame(props){
+  const { PUBLIC_URL } = process.env;
   const dbGenres = useSelector(state => state.genres);
   const { error, success } = useSelector(state => state);
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ export default function VideoGame(props){
 
   return (
     <div className={style.card}>
-      <img src={props.background_image ? props.background_image: './images/background_default.jpg'} alt="Imagen del juego" />
+      <img src={props.background_image ? props.background_image: `${PUBLIC_URL}/images/background_default.jpg`} alt="Imagen del juego" />
       <h1>{props.name}</h1>
       <div className={style.containRating}>
         <i className="fa fa-star" aria-hidden="true">
@@ -57,7 +58,7 @@ export default function VideoGame(props){
           });
         })}
       </div>
-      <Link className={isNaN(props.id) ? style.lnk : ''} to={`/videogames/game/${props.id}`}>
+      <Link className={isNaN(props.id) ? style.lnk : ''} to={PUBLIC_URL+`/videogames/game/${props.id}`}>
         <p>view more</p>
       </Link>
       {isNaN(props.id) &&
