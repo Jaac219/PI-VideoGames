@@ -1,5 +1,5 @@
 # PI-VideoGames
 
 ##Login pruebas
-User: user@gmail.com
-Password: 1234
+- User: user@gmail.com
+- Password: 1234
